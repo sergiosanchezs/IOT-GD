@@ -70,3 +70,40 @@ When data result in each channel is:
 						for res in range(0, 6):
 								print "Channel " + str(res+1) + ": " + str(results[res])
 				IOT.moacon.CloseSerialMoacon()
+
+====================================
+SPI MODULE LIBRARY
+====================================
+
+#### ADC with MCP3208
+
+This module let you use the chip ADC MCP3208 which have 8 analog channels to use in differents purposes. Per example, You can connect a LM35 sensor to measure and control the temperature in a close place to control. You can use a different many sensor  depending your application. You can measure the voltage, current, humidity and many things more. 
+
+#### *Note: You need to add a voltage divider to measure voltages higher than the Vdd Vref*
+
+This module use the SPI protocol to send to RPI all measured data.
+
+The module use the function **_readadc(n)_**  where n is the ADC channel where the sensor is connected. You can use a cycle "for" from n=0 to n=7 if you have connected eight sensors to chip and you want take every measure of these at the same time.
+
+	
+	import time
+
+	from IOT_GD import mcp3208
+	
+	if __name__ == "__main__":
+		while True:
+			channels = []
+			for n in range(0, 8):
+				data = mcp3208.readadc(n)
+				channels.insert(n, data)
+			#print channels
+			print "----------------------"
+			for n in range(0, 8):
+				print "channel " + str(n+1) + ": " + str(channels[n])
+			print "",
+			time.sleep(1)
+
+	
+
+
+

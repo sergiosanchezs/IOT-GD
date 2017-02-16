@@ -1,3 +1,6 @@
+= Chellow Manual
+:toclevels: 1
+:toc:
 
 ====================================
 MOACON MODULES LIBRARY
@@ -7,9 +10,9 @@ MOACON MODULES LIBRARY
 IoT. You can read moacon modules (Modbus communication - cubloc.com) and mcp3208 - 8 channel 12Bit ADC from Rpi 3 and others.
 
 You can install this package by typing the following code in terminal in the rapsberry Pi:
-
-	$ sudo pip install IOT_GD
-
+```
+$ sudo pip install IOT_GD
+```
 This package include serveral modules:
 Module moacon.py: This module contains the folling functions:
 
@@ -19,9 +22,9 @@ This function allows to open a serial port in raspberry pi 3 named 'Serial0'
 and Baud Rate speed at 115200, to communicate well with the 
 In Rpi 3 you have to disable bluetooth device and swippe the serial port. 
 When you execute the following command and you have 'Serial0 -> ttyAMA0'::
-				
-	$ ls -l /dev/
-
+```			
+$ ls -l /dev/
+```
 #### CloseSerialMoacon(): 
 
 This function close the serial connection oppened by OpenSerialMoacon().
@@ -47,35 +50,35 @@ When data result in each channel is:
 
 
 #### READING EXAMPLE CODE FOR RS_ADIN4. TESTING AND WORKING:
-
-	import serial
-	import time
-	from IOT_GD import moacon
-	ModuleNumber = 1
-	if __name__ == '__main__':
-			if moacon.OpenSerialMoacon() is True:
-					results = moacon.RS_ADIN4(ModuleNumber)
-					# print results
-					print "Module " + str(ModuleNumber)
-					for res in range(0, 4):
-							print "Channel " + str(res+1) + ": " + str(results[res])
-			moacon.CloseSerialMoacon()
-
+```
+import serial
+import time
+from IOT_GD import moacon
+ModuleNumber = 1
+if __name__ == '__main__':
+		if moacon.OpenSerialMoacon() is True:
+				results = moacon.RS_ADIN4(ModuleNumber)
+				# print results
+				print "Module " + str(ModuleNumber)
+				for res in range(0, 4):
+						print "Channel " + str(res+1) + ": " + str(results[res])
+		moacon.CloseSerialMoacon()
+```
 #### READING EXAMPLE CODE FOR RS_SADIN6. TESTING AND WORKING:
-
-	import serial
-	import time
-	from IOT_GD import moacon
-	ModuleNumber = 7
-	if __name__ == '__main__':
-			if moacon.OpenSerialMoacon() is True:
-					results = moacon.RS_SADIN6(ModuleNumber)
-					# print results
-					print "Module " + str(ModuleNumber)
-					for res in range(0, 6):
-							print "Channel " + str(res+1) + ": " + str(results[res])
-			moacon.CloseSerialMoacon()
-
+```
+import serial
+import time
+from IOT_GD import moacon
+ModuleNumber = 7
+if __name__ == '__main__':
+		if moacon.OpenSerialMoacon() is True:
+				results = moacon.RS_SADIN6(ModuleNumber)
+				# print results
+				print "Module " + str(ModuleNumber)
+				for res in range(0, 6):
+						print "Channel " + str(res+1) + ": " + str(results[res])
+		moacon.CloseSerialMoacon()
+```
 ====================================
 SPI MODULE LIBRARY
 ====================================
@@ -89,18 +92,19 @@ This module let you use the chip ADC MCP3208 which have 8 analog channels to use
 This module use the SPI protocol to send to RPI all measured data.
 
 The module use the function **_readadc(n)_**  where n is the ADC channel where the sensor is connected. You can use a cycle "for" from n=0 to n=7 if you have connected eight sensors to chip and you want take every measure of these at the same time.
-
-	import time
-	from IOT_GD import mcp3208
-	if __name__ == "__main__":
-		while True:
-			channels = []
-			for n in range(0, 8):
-				data = mcp3208.readadc(n)
-				channels.insert(n, data)
-			#print channels
-			print "----------------------"
-			for n in range(0, 8):
-				print "channel " + str(n+1) + ": " + str(channels[n])
-			print "",
-			time.sleep(1)
+```
+import time
+from IOT_GD import mcp3208
+if __name__ == "__main__":
+	while True:
+		channels = []
+		for n in range(0, 8):
+			data = mcp3208.readadc(n)
+			channels.insert(n, data)
+		#print channels
+		print "----------------------"
+		for n in range(0, 8):
+			print "channel " + str(n+1) + ": " + str(channels[n])
+		print "",
+		time.sleep(1)
+```

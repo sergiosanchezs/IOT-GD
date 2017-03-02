@@ -70,12 +70,10 @@ def checking_CRC_sum(data_str):
 #//=========================================================================================================================
 #//=				FUNCION QUE EXTRAE LA DATA REAL DE LAS TRAMAS RECIBIDAS POR LOS MODULOS RS-ADIN4 Y RS-SADIN6			=
 #//=========================================================================================================================
-def Fix_RSModule_Data(read_data):
-	print_in = False
-	print_out = False
+def Fix_RSModule_Data(read_data, debug=False):
 	lenght_readData = len(read_data)
 
-	if print_in:
+	if debug:
 		print "Lenght: " + str(lenght_readData) + " -RAW Data: "
 		for num in range(0,lenght_readData):
 			print hex(ord(read_data[num])),
@@ -107,15 +105,17 @@ def Fix_RSModule_Data(read_data):
 			_MBrxdata += read_data[k]
 		k += 1	# Normal jump to get analize the next raw data
 
-	return _MBrxdata
-
 	# Se imprimen los datos recibidos procesados con datos reales.
-	if print_out:
+	if debug:
 		print "=============================================="
 		real_lenght = len(_MBrxdata)
+		print "Lenght: " + str(lenght_readData) + " -Real Data: "
 		for num in range(0,real_lenght):
 			print hex(ord(_MBrxdata[num])),
 		print ""
+
+
+	return _MBrxdata
 
 """
 =========================================================================================================================
@@ -125,10 +125,10 @@ def Fix_RSModule_Data(read_data):
 =	It proccess the data before verify the check sum CRC																=
 =========================================================================================================================
 """
-def RS_SADIN6(ReadModule):
+def RS_SADIN6(ReadModule, debug=False):
 	RS_Code = 0x27	# Defining the code of RS-SADIN6 Modules
 	numChannels = 6	# Number of channels in the ADC Module
-	debug = False	# If you wanna to activate debug (print) for testing
+	# debug = False	# If you wanna to activate debug (print) for testing
 	Values = RS_Read(ReadModule, RS_Code, numChannels, debug)
 	return Values
 """
@@ -136,13 +136,14 @@ def RS_SADIN6(ReadModule):
 =					READ FUNCTION OF MOACON MODULE RS_ADIN4 - SPEED COMMUNICATION: 115.200 BAUD							=
 =	Buy this module in: http://www.comfiletech.com/rs-adin4-ad-input/													=
 =	New version: V1.2	Release Date:	2017-01-27																		=
-=	It verify the check sum CRC before it proccess the data															=
+=	It proccess the data before verify the check sum CRC but in some cases It verify the check sum CRC before it 		=
+=	proccess the data																									=
 =========================================================================================================================
 """
-def RS_ADIN4(ReadModule):
+def RS_ADIN4(ReadModule, debug=False):
 	RS_Code = 0x21	# Defining the code of RS-ADIN4 Modules
 	numChannels = 4	# Number of channels in the ADC Module
-	debug = False	# If you wanna to activate debug (print) for testing
+	# debug = False	# If you wanna to activate debug (print) for testing
 	Values = RS_Read(ReadModule, RS_Code, numChannels, debug)
 	return Values
 """
@@ -201,20 +202,20 @@ def RS_Read (ReadModule, RS_Code, numChannels, debug):
 
 		# Print data to view how received the data
 		lenght_readData = len(read_data)
-		if debug: print "Lenght: " + str(lenght_readData) + " -RAW Data: "
-		for num in range(0,lenght_readData):
-			if debug:
-				print hex(ord(read_data[num])),
-		if debug:
-			print ""
-			print "Read size: " + str(len(read_data))
+		# if debug: print "Lenght: " + str(lenght_readData) + " -RAW Data: "
+		# for num in range(0,lenght_readData):
+		# 	if debug:
+		# 		print hex(ord(read_data[num])),
+		# if debug:
+		# 	print ""
+		# 	print "Read size: " + str(len(read_data))
 
 
 		# Checking if there is data en read_data
 		if lenght_readData > 0:	
 			# RS_SADIN6 proccess the data before verify the check sum CRC.
-			if RS_Code == RS_SADIN6_Code:
-				read_data = Fix_RSModule_Data(read_data)		# Function that fix all modbus data to real data
+			# if RS_Code == RS_SADIN6_Code:	# *¨*******************
+			read_data = Fix_RSModule_Data(read_data, debug)		# Function that fix all modbus data to real data
 
 			check_crc = checking_CRC_sum(read_data)				# Checking if the CRC of data is OK
 
@@ -274,7 +275,7 @@ def RS_Read (ReadModule, RS_Code, numChannels, debug):
 				RawData = []
 				if len(read_data) > 6:
 					# RS_ADIN4 verify the check sum CRC before the proccess the data
-					if RS_Code == RS_ADIN4_Code: read_data = Fix_RSModule_Data(read_data)	# Function that fix all modbus data to real data
+					# if RS_Code == RS_ADIN4_Code: read_data = Fix_RSModule_Data(read_data)	# Function that fix all modbus data to real data***************
 					k = 3
 					data = 0
 					if debug: print "Array size: " + str(len(read_data))
@@ -323,7 +324,7 @@ def RS_Read (ReadModule, RS_Code, numChannels, debug):
 # import time
 # import IOT.moacon
 # ModuleNumber = 1
-# if __name__ == '__main__':
+# if __name__ == '__main__':	
 # 	if IOT.moacon.OpenSerialMoacon() is True:
 # 		results = IOT.moacon.RS_ADIN4(ModuleNumber)
 # 		# print results

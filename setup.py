@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='IOT_GD',
-	  version='1.0.3',
+	  version='1.0.5',
 	  description='IoT. You can read moacon modules (Modbus communication - cubloc.com) and mcp3208 - 8 channel 12Bit ADC from Rpi 3 and others.',
 	  # long_description='long description',
 	  long_description=long_description,

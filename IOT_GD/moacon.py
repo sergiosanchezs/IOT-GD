@@ -31,7 +31,7 @@ import serial
 import time
 # import sys
 
-def OpenSerialMoacon():
+def OpenSerialfor_Moacon():
 	global ser_moacon
 	# This function works well for Raspberry Pi 3 when you disable the bluetooth and 
 	# swap the virtual or software serial port with the fisical serial port.
@@ -56,7 +56,7 @@ def OpenSerialMoacon():
 		return False
 		ser_moacon.close()
 
-def CloseSerialMoacon():
+def CloseSerialfor_Moacon():
 	global ser_moacon
 	ser_moacon.close()
 
@@ -309,10 +309,10 @@ def RS_Read (ReadModule, RS_Code, numChannels, debug):
 
 		""" 
 		When data result in each channel is:
-		-> 1: probably the channel is damaged.
-		-> 2: Probably the data received is incomplete.
-		-> 3: It tried to read 3 times and it couldn't get an answer from the module. 
-		-> 4: Module is Disconnected. Please verify the connection.
+		-> -1: probably the channel is damaged.
+		-> -2: Probably the data received is incomplete.
+		-> -3: It tried to read 3 times and it couldn't get an answer from the module. 
+		-> -4: Module is Disconnected. Please verify the connection.
 		"""
 
 """
@@ -325,13 +325,13 @@ def RS_Read (ReadModule, RS_Code, numChannels, debug):
 # import IOT.moacon
 # ModuleNumber = 1
 # if __name__ == '__main__':	
-# 	if IOT.moacon.OpenSerialMoacon() is True:
+# 	if IOT.moacon.OpenSerialfor_Moacon() is True:
 # 		results = IOT.moacon.RS_ADIN4(ModuleNumber)
 # 		# print results
 # 		print "Module " + str(ModuleNumber)
 # 		for res in range(0, 4):
 # 			print "Channel " + str(res+1) + ": " + str(results[res])
-# 	IOT.moacon.CloseSerialMoacon()
+# 	IOT.moacon.CloseSerialfor_Moacon()
 """
 =====================================================================================
 =			READING EXAMPLE CODE FOR RS_SADIN6. TESTING AND WORKING					=
@@ -342,10 +342,10 @@ def RS_Read (ReadModule, RS_Code, numChannels, debug):
 # import IOT.moacon
 # ModuleNumber = 7
 # if __name__ == '__main__':
-# 	if IOT.moacon.OpenSerialMoacon() is True:
+# 	if IOT.moacon.OpenSerialfor_Moacon() is True:
 # 		results = IOT.moacon.RS_SADIN6(ModuleNumber)
 # 		# print results
 # 		print "Module " + str(ModuleNumber)
 # 		for res in range(0, 6):
 # 			print "Channel " + str(res+1) + ": " + str(results[res])
-# 	IOT.moacon.CloseSerialMoacon()
+# 	IOT.moacon.CloseSerialfor_Moacon()

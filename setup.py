@@ -9,16 +9,16 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='IOT_GD',
-	  version='1.0.5',
+	  version='1.0.6',
 	  description='IoT. You can read moacon modules (Modbus communication - cubloc.com) and mcp3208 - 8 channel 12Bit ADC from Rpi 3 and others.',
 	  # long_description='long description',
 	  long_description=long_description,
 	  author='Sergio Sanchez, Ruben Morales',
-	  license='BSD',
+	  license='MPL 2.0',
 	  classifiers=[
 		# How mature is this project? Common values are
 		#   3 - Alpha
@@ -32,7 +32,7 @@ setup(name='IOT_GD',
 		'Topic :: System :: Hardware :: Hardware Drivers',
 
 		# Pick your license as you wish (should match "license" above) 
-		'License :: OSI Approved :: BSD License',
+		'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
 
 		# Specify the Python versions you support here. In particular, ensure
 		# that you indicate whether you support Python 2, Python 3 or both.
@@ -47,7 +47,7 @@ setup(name='IOT_GD',
 		'Natural Language :: English',
 	],
 	  author_email='sergio.sanchezs@ingenieros.com',
-	  keywords='IOT_GD moacon ADC modbus rs-485 spi',
+	  keywords='IOT_GD moacon ADC modbus rs-485 spi Analog',
 	  url='https://github.com/sergiosanchezs/IOT-GD',
 	  # packages=['IOT_GD'],
 	  # # package_dir={'IOT_GD':'/home/pi/IOT_GD'},

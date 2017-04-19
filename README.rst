@@ -109,7 +109,7 @@ terminals.
 .. code-block:: python
 
   MD_ADIN4(Module_Number)
-	
+  
 **Module Number:** This is the number of the rotary switch on the face of each module to set its
 Modbus slave address. It can be from 1 to 15, but directly on the rotary switch you can use 
 from 1 to 10, if you wanna connect 5 more modules (from 11 to 15) you need to make a little simple 
@@ -154,7 +154,7 @@ terminals.
 .. code-block:: python
 
   MD_HADIN4(Module_Number)
-	
+  
 **Module Number:** This is the number of the rotary switch on the face of each module to set its
 Modbus slave address. It can be from 1 to 15, but directly on the rotary switch you can use 
 from 1 to 10, if you wanna connect 5 more modules (from 11 to 15) you need to make a little simple 
@@ -253,7 +253,7 @@ The least significant bit is the channel 0.
   if __name__ == '__main__':
     if modport.OpenSerialfor_ModPort() is True:
         print "MD-DOSI8, Module Number: " + str(10), " "
-        Value = 1	# Value to be assiged to the channel (0 - Logic Low, 1 - Logic High)
+        Value = 1 # Value to be assiged to the channel (0 - Logic Low, 1 - Logic High)
         for channel in range(0,8):
           bac = modport.MD_DOSI8_Write_One(ModuleNumber, channel, Value)
           print "Channel" + str(channel) + " Value: " + str(bac)
@@ -269,8 +269,8 @@ The least significant bit is the channel 0.
   ModuleNumber = 10
   if __name__ == '__main__':
     if modport.OpenSerialfor_ModPort() is True:
-      Data_bits = b'10101010'		# Binary number that you want on the outputs
-      Data_to_be = sum(int(c) * (2 ** i) for i, c in enumerate(Data_bits[::-1]))	# converting to integer before passing to the function
+      Data_bits = b'10101010'   # Binary number that you want on the outputs
+      Data_to_be = sum(int(c) * (2 ** i) for i, c in enumerate(Data_bits[::-1]))  # converting to integer before passing to the function
       modport.MD_DOSI8_Write_All(Module_Number, Data_to_be)
       print "##############################################################"
     modport.CloseSerialfor_ModPort()

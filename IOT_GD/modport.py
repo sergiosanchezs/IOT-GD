@@ -556,16 +556,23 @@ def FncCode_15_Force_Multiple_Coil_Status(Module_Number, MD_Address, MD_Data, de
 			if debug: print "CRC ===== OK == OK == OK ====="
 			if  MD_lenght == ord(read_data[lenght_readData-3]):
 				# if the values are equal it means that the value was assigned satisfactory and return a 1 to show it
-				RawData = 1
+				rev_byte = reverse_bits(chr(MD_Data), 8)
+				RawData = [rev_byte >> i & 1 for i in range(7,-1,-1)]
 				return RawData
 			else:	# if the value wasn't assinged correctly
-				RawData = -1
+				RawData = []
+				for n in range(0, numChannels):
+					RawData.insert(n, -1)
 				return RawData
 		else:	# If the CRC arrived is corrupted
-			RawData = -3
+			RawData = []
+			for n in range(0, numChannels):
+				RawData.insert(n, -3)
 			return RawData
 	else:	# if there is no data in read_data fill the variable with -4 to show an error.
-		RawData = -4
+		RawData = []
+		for n in range(0, numChannels):
+			RawData.insert(n, -4)
 		return RawData
 
 	""" 
@@ -601,83 +608,3 @@ def MD_request_data_pack (Module_Number, Function_Code, MD_Address, MD_lenght, d
 	if debug: print " ".join("{:02x}".format(ord(c)) for c in tx_data)
 
 	serialport.write(tx_data)		# Send the request channels data to modport Module_Number
-
-	
-
-
-Module_Number = 1
-if __name__ == '__main__':
-	temp = 0
-	form = '{:5}'
-	if OpenSerialfor_ModPort() is True:
-		while True:
-
-			# Reading a MD_ADIN4 modport module - 4 Analog inputs
-			for Module_Number in range(10,11):
-				results = MD_ADIN4(Module_Number)
-
-				print "MD-ADIN4, Module_Number " + str(Module_Number) + ": "
-				for res in range(0, 4):
-					data = form.format(results[res])
-					print "Channel " + str(res+1) + ": " + data + "  ",
-				print ""
-
-			# Reading all data from MD_DIDC8 modport module - 8 Digital inputs 24 VDC
-			for Module_Number in range(10,11):
-				results = MD_DIDC8(Module_Number)
-
-				print "MD-DIDC8, Module_Number " + str(Module_Number) + ": "
-				for res in range(0, 8):
-					data = form.format(results[res])
-					print "Ch" + str(res) + ": " + data + " ",
-				print ""
-
-			# if temp == 0:
-			# 	print "MD-DOSI8, Module Number: " + str(10), " "
-			# 	for channel in range(1,8,2):
-			# 		bac = MD_DOSI8_Write_One(10, channel, 1, False)
-			# 		print "Channel" + str(channel) + " Value: " + str(bac)
-			# 	temp = 1
-			# else:		# 
-			# 	print "MD-DOSI8, Module Number: " + str(10), " "
-			# 	for channel in range(0,8):
-			# 		bac = MD_DOSI8_Write_One(10, channel, 0, False)
-			# 		print "Channel" + str(channel) + " Value: " + str(bac)
-			# 	temp = 0
-			# Read all 
-			print "--------------------------------------------------------------"
-			Module_Number = 10
-			results = MD_DOSI8_Read_All(Module_Number)
-			print "MD-DOSI8, Module Number " + str(Module_Number) + ": "
-			for res in range(0, 8):
-				data = form.format(results[res])
-				print "Ch" + str(res) + ": " + data + " ",
-			print ""
-			
-			# ----------------------------------------------------------------------
-			Module_Number = 10
-			Data_bits = b'11111111'
-			# converting to integer
-			Data_to_be = sum(int(c) * (2 ** i) for i, c in enumerate(Data_bits[::-1]))
-			MD_DOSI8_Write_All(Module_Number, Data_to_be)
-			# ----------------------------------------------------------------------
-			Module_Number = 10
-			results = MD_DOSI8_Read_All(Module_Number)
-			print "MD-DOSI8, Module Number " + str(Module_Number) + ": "
-			for res in range(0, 8):
-				data = form.format(results[res])
-				print "Ch" + str(res) + ": " + data + " ",
-			print ""
-			time.sleep(1)
-			# ----------------------------------------------------------------------
-			Module_Number = 10
-			Data_bits = b'10101010'
-			# converting to integer
-			Data_to_be = sum(int(c) * (2 ** i) for i, c in enumerate(Data_bits[::-1]))
-			MD_DOSI8_Write_All(Module_Number, Data_to_be)
-			print "##############################################################"
-			# Recolecting data from digital inputs
-			time.sleep(1)
-
-	CloseSerialfor_ModPort()
-

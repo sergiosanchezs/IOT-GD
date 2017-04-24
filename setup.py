@@ -13,19 +13,19 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='IOT_GD',
-	  version='1.0.6',
+	  version='1.0.8',
 	  description='IoT. You can read moacon modules (Modbus communication - cubloc.com) and mcp3208 - 8 channel 12Bit ADC from Rpi 3 and others.',
 	  # long_description='long description',
 	  long_description=long_description,
 	  author='Sergio Sanchez, Ruben Morales',
-	  license='MPL 2.0',
+	  license='Mozilla Public License Version 2.0',
 	  classifiers=[
 		# How mature is this project? Common values are
 		#   3 - Alpha
 		#   4 - Beta
 		#   5 - Production/Stable
 		'Development Status :: 4 - Beta',
-
+		'Development Status :: 5 - Production/Stable',
 		# Indicate who your project is intended for
 		'Intended Audience :: Education',
 		'Intended Audience :: Developers',

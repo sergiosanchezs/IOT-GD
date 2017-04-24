@@ -1,10 +1,10 @@
 import serial
 import time
 from IOT_GD import modport
-ModuleNumber = 10
+Module_Number = 10
+form = '{:5}'
 if __name__ == '__main__':
 		if modport.OpenSerialfor_ModPort() is True:
-				print "--------------------------------------------------------------"
 				results = modport.MD_DIDC8(Module_Number)
 				print "MD-DIDC8, Module_Number " + str(Module_Number) + ": "
 				for res in range(0, 8):

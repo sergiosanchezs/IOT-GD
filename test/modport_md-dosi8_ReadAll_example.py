@@ -1,7 +1,8 @@
 import serial
 import time
 from IOT_GD import modport
-ModuleNumber = 10
+Module_Number = 10
+form = '{:5}'
 if __name__ == '__main__':
 	if modport.OpenSerialfor_ModPort() is True:
 		print "--------------------------------------------------------------"
